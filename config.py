@@ -15,7 +15,7 @@ CHROMA_COLLECTION = "rulesbot"
 CHROMA_PATH = "./chroma_db"
 
 # --- Retrieval ---
-N_RESULTS = 3
+N_RESULTS = 10
 
 # --- Documents ---
 DOCS_PATH = "./docs"

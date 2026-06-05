@@ -68,5 +68,32 @@ def retrieve(query, n_results=N_RESULTS):
     if _collection.count() == 0:
         return []
 
-    # Your implementation here.
-    return []
+    results = _collection.query(
+        query_texts=[query],
+        n_results=n_results,
+        include=["documents", "metadatas", "distances"]
+    )
+
+    print(f"\n=== RAW QUERY RESULTS ===")
+    print(f"Query: {query}")
+    print(f"Number of results: {len(results['documents'][0])}")
+    for i in range(len(results["documents"][0])):
+        print(f"\n[{i}] {results['metadatas'][0][i]}")
+        print(f"    Distance: {results['distances'][0][i]:.3f}")
+        print(f"    Text: {results['documents'][0][i][:100]}...")
+
+    chunks = []
+    for i in range(len(results["documents"][0])):
+        chunks.append({
+            "text": results["documents"][0][i],
+            "game": results["metadatas"][0][i]["game"],
+            "distance": results["distances"][0][i]
+        })
+
+    # Explicitly sort by distance (ascending — lowest/most similar first)
+    chunks.sort(key=lambda c: c["distance"])
+
+    for chunk in chunks:
+        print(f"[{chunk['game']}] (dist: {chunk['distance']:.3f}) {chunk['text'][:80]}...")
+
+    return chunks

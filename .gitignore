@@ -5,6 +5,7 @@
 .venv/
 venv/
 env/
+myenv/
 
 # ChromaDB — delete this folder to force re-ingestion
 chroma_db/
@@ -18,3 +19,5 @@ __pycache__/
 # OS
 .DS_Store
 Thumbs.db
+
+.env
